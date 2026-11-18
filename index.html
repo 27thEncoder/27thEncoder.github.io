@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madhan M (27thEncoder) | Aspiring Cybersecurity Student & Systems Builder</title>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #040609;
+      --panel: rgba(11, 16, 24, 0.92);
+      --panel-alt: #080c12;
+      --border: rgba(0, 255, 170, 0.22);
+      --neon: #00ffaa;
+      --cyan: #00e5ff;
+      --amber: #ffb703;
+      --text: #e6edf3;
+      --muted: #8b949e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      background-image:
+        radial-gradient(circle at 12% 8%, rgba(0, 255, 170, 0.07), transparent 32%),
+        radial-gradient(circle at 88% 32%, rgba(0, 229, 255, 0.07), transparent 35%),
+        radial-gradient(circle at 20% 78%, rgba(0, 255, 170, 0.05), transparent 35%),
+        linear-gradient(rgba(0, 255, 170, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 170, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 34px 34px, 34px 34px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--neon), var(--cyan));
+      box-shadow: 0 0 12px var(--neon); z-index: 999; transition: width 0.08s ease-out;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: rgba(4, 6, 9, 0.94); backdrop-filter: blur(14px); z-index: 100;
+    }
+    .brand {
+      font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.08rem; letter-spacing: -0.5px;
+      background: linear-gradient(90deg, var(--neon), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .links a { color: var(--muted); text-decoration: none; margin-left: 16px; font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; transition: 0.2s; }
+    .links a:hover { color: var(--neon); text-shadow: 0 0 10px rgba(0, 255, 170, 0.5); }
+    .hero { padding: 72px 0 54px; display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 36px; align-items: center; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      color: var(--neon); border: 1px solid var(--border); background: rgba(0, 255, 170, 0.06);
+      padding: 6px 14px; border-radius: 50px; margin-bottom: 18px;
+    }
+    .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--neon); box-shadow: 0 0 10px var(--neon); animation: pulseGlow 2s infinite ease-in-out; }
+    @keyframes pulseGlow { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: 0.55; } }
+    h1 { font-size: clamp(2.4rem, 5.2vw, 3.8rem); line-height: 1.08; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 18px; }
+    .glow { background: linear-gradient(90deg, var(--neon), var(--cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .sub { color: var(--muted); font-size: 1.04rem; margin-bottom: 18px; }
+    .sub strong { color: var(--text); }
+    .manifesto {
+      border-left: 3px solid var(--neon); padding: 12px 16px; background: rgba(0, 255, 170, 0.04);
+      color: #cbd5e1; font-size: 0.92rem; margin-bottom: 26px; border-radius: 0 8px 8px 0;
+    }
+    .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      padding: 13px 22px; border-radius: 7px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+      font-weight: 700; text-decoration: none; transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1); cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-neon { background: var(--neon); color: #040609; box-shadow: 0 0 24px rgba(0, 255, 170, 0.32); border: none; }
+    .btn-neon:hover { transform: translateY(-2px); box-shadow: 0 0 34px rgba(0, 255, 170, 0.58); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--text); background: var(--panel); }
+    .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 20px rgba(0, 229, 255, 0.15); transform: translateY(-2px); }
+    .status-term {
+      background: #070b11; border: 1px solid var(--border); border-radius: 12px;
+      box-shadow: 0 0 38px rgba(0, 255, 170, 0.1); overflow: hidden; font-family: 'JetBrains Mono', monospace;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    .status-term:hover { border-color: rgba(0, 255, 170, 0.45); box-shadow: 0 0 48px rgba(0, 255, 170, 0.18); transform: translateY(-3px); }
+    .st-bar {
+      background: #0d131d; padding: 10px 16px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; font-size: 0.74rem; color: var(--muted);
+    }
+    .dots { display: flex; gap: 6px; }
+    .dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .st-body { padding: 20px; font-size: 0.8rem; line-height: 1.75; }
+    .st-cmd { color: var(--neon); margin-top: 10px; }
+    .st-cmd:first-child { margin-top: 0; }
+    .st-out { color: #cbd5e1; padding-left: 12px; }
+    .st-out span { color: var(--cyan); }
+
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin-bottom: 54px; }
+    .stat-box { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; transition: 0.3s ease; }
+    .stat-box:hover { border-color: var(--neon); transform: translateY(-3px); box-shadow: 0 0 24px rgba(0, 255, 170, 0.12); }
+    .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 1.55rem; font-weight: 700; color: var(--neon); }
+    .stat-lbl { font-size: 0.76rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+
+    section { padding: 64px 0; border-top: 1px solid var(--border); }
+    .sec-tag { font-family: 'JetBrains Mono', monospace; color: var(--cyan); font-size: 0.78rem; letter-spacing: 1.6px; text-transform: uppercase; margin-bottom: 6px; }
+    h2 { font-size: 1.95rem; margin-bottom: 10px; }
+    .sec-desc { color: var(--muted); max-width: 720px; margin-bottom: 32px; font-size: 0.96rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 22px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 26px;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .card:hover { border-color: var(--neon); box-shadow: 0 0 32px rgba(0, 255, 170, 0.16); transform: translateY(-5px); }
+    .card-meta { display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--cyan); margin-bottom: 10px; }
+    .badge-amber { color: var(--amber); border: 1px solid rgba(255, 183, 3, 0.35); padding: 2px 9px; border-radius: 4px; background: rgba(255, 183, 3, 0.08); }
+    .badge-green { color: var(--neon); border: 1px solid rgba(0, 255, 170, 0.35); padding: 2px 9px; border-radius: 4px; background: rgba(0, 255, 170, 0.08); }
+    .card h3 { font-size: 1.22rem; margin-bottom: 10px; color: #fff; }
+    .card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 16px; }
+    .code-box {
+      background: #05080c; border: 1px solid #16202e; border-radius: 8px; padding: 12px 14px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #a5f3fc; margin-bottom: 18px; overflow-x: auto; line-height: 1.55;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; background: rgba(0, 229, 255, 0.08); color: var(--cyan); padding: 4px 10px; border-radius: 5px; border: 1px solid rgba(0, 229, 255, 0.22); transition: 0.2s; }
+    .tag:hover { border-color: var(--neon); color: var(--neon); background: rgba(0, 255, 170, 0.1); }
+    .c-link { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--neon); text-decoration: none; font-weight: 700; display: inline-block; transition: transform 0.2s ease; }
+    .c-link:hover { text-decoration: underline; transform: translateX(3px); }
+    .proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+    .proof-card { background: var(--panel-alt); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+    .proof-card:hover { border-color: var(--cyan); box-shadow: 0 0 26px rgba(0, 229, 255, 0.15); transform: translateY(-4px); }
+    .proof-card img { width: 100%; height: 155px; object-fit: contain; background: #030508; padding: 8px; border-bottom: 1px solid var(--border); display: block; }
+    .proof-cap { padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; color: var(--muted); }
+    .proof-cap strong { color: var(--neon); display: block; margin-bottom: 4px; font-size: 0.84rem; }
+    .bar-wrap { margin-bottom: 16px; }
+    .bar-head { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; margin-bottom: 6px; }
+    .bar-track { height: 8px; background: #0a0f17; border-radius: 99px; border: 1px solid #1b2536; overflow: hidden; }
+    .bar-fill {
+      height: 100%; background: linear-gradient(90deg, var(--neon), var(--cyan)); border-radius: 99px;
+      box-shadow: 0 0 12px rgba(0, 255, 170, 0.4); transform-origin: left; transform: scaleX(0);
+      transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .bar-fill.fill-active { transform: scaleX(1); }
+    .reveal {
+      opacity: 0; transform: translateY(28px) scale(0.985);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+    @media (max-width: 860px) { .hero { grid-template-columns: 1fr; padding: 48px 0 36px; } .links { display: none; } }
+  </style>
+</head>
+<body>
+  <div id="scroll-progress"></div>
+  <div class="wrap">
+    <!-- ===================================================================
+         NAVIGATION BAR
+         =================================================================== -->
+    <nav>
+      <div class="brand">Madhan M@27thEncoder</div>
+      <div class="links">
+        <a href="#journey">/journey</a>
+        <a href="#evidence">/evidence</a>
+        <a href="#research">/research</a>
+        <a href="#skills">/proficiency</a>
+        <a href="#roadmap">/roadmap</a>
+        <a href="#contact">/contact</a>
+      </div>
+    </nav>
+
+    <!-- ===================================================================
+         HERO SECTION
+         =================================================================== -->
+    <div class="hero">
+      <div class="reveal">
+        <div class="pill"><span class="pulse"></span> ASPIRING CYBERSECURITY STUDENT • SYSTEMS & WEB SECURITY</div>
+        <h1>Madhan M.<br><span class="glow">Building Under The Hood.</span></h1>
+        <p class="sub">
+          Independent security learner from Chennai, India. I started as an ordinary builder using tools on the surface—before shifting toward understanding <strong>how networks, Linux systems, and web applications actually work under the hood</strong>.
+        </p>
+        <div class="manifesto">
+          “Instead of stopping at theory and memorization, I focus on practical proof of work—capturing wireless frames, exploring Linux shell boundaries, and learning web exploitation from first principles.”
+        </div>
+        <div class="btns">
+          <a href="#research" class="btn btn-neon">EXPLORE PROOF OF WORK</a>
+          <a href="https://github.com/27thEncoder" class="btn btn-ghost">GITHUB (@27thEncoder)</a>
+          <a href="https://www.linkedin.com/in/madhan-m-27thencoder/" class="btn btn-ghost">LINKEDIN</a>
+        </div>
+      </div>
+
+      <div class="status-term reveal">
+        <div class="st-bar">
+          <div class="dots">
+            <span style="background:#ff5f56"></span>
+            <span style="background:#ffbd2e"></span>
+            <span style="background:#27c93f"></span>
+          </div>
+          <span>27thEncoder@sec — profile.sh</span>
+        </div>
+        <div class="st-body">
+          <div class="st-cmd">$ whoami</div>
+          <div class="st-out">madhan m — <span>aspiring cybersecurity student</span></div>
+          <div class="st-cmd">$ cat focus.txt</div>
+          <div class="st-out">› <span>web & API security</span> (SQLi, XSS, headers & OWASP API Top 10)</div>
+          <div class="st-out">› <span>cryptography</span> (CryptoHack RSA, Diffie-Hellman & modular math)</div>
+          <div class="st-out">› <span>binary & wargames</span> (OTW Natas, Leviathan & Buffer Overflow)</div>
+          <div class="st-out">› <span>linux internals (100%)</span>, custom tools & DSA</div>
+          <div class="st-cmd">$ cat certifications_in_progress.txt</div>
+          <div class="st-out">› <span>EC-Council SQLi</span> • <span>APIsec PenTesting</span> • <span>Qualys TotalAppSec</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================
+         KEY METRICS STRIP
+         =================================================================== -->
+    <div class="stats">
+      <div class="stat-box reveal"><div class="stat-num">100%</div><div class="stat-lbl">Linux Shell & POSIX Mastery</div></div>
+      <div class="stat-box reveal"><div class="stat-num">75+</div><div class="stat-lbl">Hand-Documented Commits</div></div>
+      <div class="stat-box reveal"><div class="stat-num">34</div><div class="stat-lbl">OTW Bandit Tiers Audited</div></div>
+      <div class="stat-box reveal"><div class="stat-num">DONE</div><div class="stat-lbl">PortSwigger SQLi Path</div></div>
+    </div>
+    <!-- ===================================================================
+         SECTION 01: THE EVOLUTION TIMELINE
+         =================================================================== -->
+    <section id="journey">
+      <div class="sec-tag reveal">// 01. THE EVOLUTION</div>
+      <h2 class="reveal">From Surface Builder to Under-The-Hood Security</h2>
+      <p class="sec-desc reveal">How an ordinary curiosity about building things transformed into deep Linux exploration, network packet analysis, and offensive web security.</p>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>STAGE 01</span><span class="badge-green">THE SPARK</span></div>
+            <h3>Ordinary User & Surface Builder</h3>
+            <p>Started out like any ordinary tech enthusiast—using tools, building basic setups, and treating software as a black box. Over time, simply making things run wasn't enough; I wanted to see what happens underneath every packet and command.</p>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>STAGE 02</span><span class="badge-green">FOUNDATIONS</span></div>
+            <h3>Networking & 100% Linux Internals</h3>
+            <p>Entered cybersecurity through networking—dissecting HTTP, DNS, LAN architectures, and raw 802.11 frames—while pushing my Linux proficiency to 100% across POSIX file permissions, restricted shells, pipes, and Bash automation.</p>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>STAGE 03</span><span class="badge-amber">THE SHIFT</span></div>
+            <h3>Transitioning Into Web Security</h3>
+            <p>Shifted my primary offensive focus into modern web applications—completing the entire PortSwigger SQL Injection path and actively diving into Cross-Site Scripting (XSS), HTTP Security Headers, and Applied Cryptography.</p>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>STAGE 04</span><span class="badge-green">CONTINUOUS GRIND</span></div>
+            <h3>Custom Tooling, Credentials & Unguided CTFs</h3>
+            <p>Preparing for EC-Council SQLi, APIsec PenTesting, Qualys TotalAppSec, and arcX CTI 101 while building standalone security tools from scratch and stepping into unguided Capture The Flag (CTFtime) challenges.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- ===================================================================
+         SECTION 02: EMPIRICAL LAB ARTIFACTS (3 OTW Bandit + 2 WPA2)
+         =================================================================== -->
+    <section id="evidence">
+      <div class="sec-tag reveal">// 02. EMPIRICAL LAB ARTIFACTS</div>
+      <h2 class="reveal">Captured Proof of Work</h2>
+      <p class="sec-desc reveal">Direct terminal and packet capture screenshots from 33+ tiers of OverTheWire Bandit Linux challenges and isolated 802.11i wireless testing labs.</p>
+      <div class="proof-grid">
+
+        <div class="proof-card reveal">
+          <img src="./assets/level24-1.jpg" onerror="this.src='https://githubusercontent.com'" alt="OTW Bandit Tier 24 Daemon Brute-Force" />
+          <div class="proof-cap">
+            <strong>[OTW Bandit] Parametric Daemon Brute-Force (Tier 24→25)</strong>
+            Automated Bash loops piped over netcat sockets to test local PIN authentication daemons.
+          </div>
+        </div>
+
+        <div class="proof-card reveal">
+          <img src="./assets/level28-1.jpg" onerror="this.src='https://githubusercontent.com'" alt="OTW Bandit Git History Forensics" />
+          <div class="proof-cap">
+            <strong>[OTW Bandit] Git Commit & Tag Forensics (Tier 28→31)</strong>
+            Inspected historical repository trees, detached HEAD states, and sanitized commit metadata across multi-tier repos.
+          </div>
+        </div>
+
+        <div class="proof-card reveal">
+          <img src="./assets/level31-1.jpg" onerror="this.src='https://githubusercontent.com'" alt="OTW Bandit Restricted Shell Escapes" />
+          <div class="proof-cap">
+            <strong>[OTW Bandit] Restricted Shell & POSIX Escapes (Tier 31→32)</strong>
+            Bypassed restricted shell environments and analyzed positional parameter execution boundaries.
+          </div>
+        </div>
+
+        <div class="proof-card reveal">
+          <img src="./assets/wireshark-eapol-display.jpg" onerror="this.src='https://githubusercontent.com'" alt="Wireshark EAPOL 4-Way Handshake" />
+          <div class="proof-cap">
+            <strong>[WPA2] Wireshark EAPOL Frame Inspection</strong>
+            Isolated all 4 EAPOL key messages over IEEE 802.11i inside an authorized private test environment.
+          </div>
+        </div>
+
+        <div class="proof-card reveal">
+          <img src="./assets/Handshake-success.jpg" onerror="this.src='https://githubusercontent.com'" alt="Airodump-ng WPA Handshake Captured" />
+          <div class="proof-cap">
+            <strong>[WPA2] Dual-Adapter Handshake Interception</strong>
+            Channel 11 locked listener (wlan0) capturing WPA handshake triggered via targeted deauth injection (wlan1).
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             [FUTURE TEMPLATE 1 — HIDDEN IN PREVIEW]
+             Uncomment when adding SQLi / Web Writeup proof
+             ===============================================================
+        <div class="proof-card reveal">
+          <img src="./assets/sqli-proof.jpg" alt="SQL Injection Exploitation Proof" />
+          <div class="proof-cap">
+            <strong>[AppSec] UNION & Blind SQL Injection Extraction</strong>
+            Demonstrated database schema enumeration and parameterized query remediation.
+          </div>
+        </div>
+        -->
+
+        <!-- ===============================================================
+             [FUTURE TEMPLATE 2 — HIDDEN IN PREVIEW]
+             Uncomment when adding CryptoHack / Natas / CTF proof
+             ===============================================================
+        <div class="proof-card reveal">
+          <img src="./assets/ctf-proof.jpg" alt="CTF / Cryptography Proof" />
+          <div class="proof-cap">
+            <strong>[Crypto / CTF] RSA & Diffie-Hellman Cryptanalysis</strong>
+            Implemented modular arithmetic attacks and verified flag recovery.
+          </div>
+        </div>
+        -->
+
+      </div>
+    </section>
+    <!-- ===================================================================
+         SECTION 03: FLAGSHIP ENGINEERING REPOSITORIES
+         =================================================================== -->
+    <section id="research">
+      <div class="sec-tag reveal">// 03. FLAGSHIP ENGINEERING REPOSITORIES</div>
+      <h2 class="reveal">Technical Research & Systems Audits</h2>
+      <p class="sec-desc reveal">Hand-documented security repositories built from scratch—pairing hands-on execution steps with practical defense strategies.</p>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta">
+              <span>802.11i WIRELESS CRYPTANALYSIS</span>
+              <span class="badge-amber">31 Commits</span>
+            </div>
+            <h3>WPA2 4-Way Handshake Interception & Cryptanalysis Pipeline</h3>
+            <p>Set up a dual-adapter wireless lab using two TP-Link TL-WN725N USB interfaces—using <code>wlan0</code> in monitor mode to capture EAPOL frames while <code>wlan1</code> sent deauthentication frames, followed by Wireshark packet inspection and offline wordlist testing.</p>
+            <div class="code-box">$ sudo ip link set wlan0 down && sudo iw wlan0 set type monitor<br>$ sudo airodump-ng -w hack1 -c 11 --bssid &lt;AP&gt; wlan0<br>$ sudo aireplay-ng --deauth 0 -a &lt;AP&gt; -c &lt;STA&gt; wlan1<br>$ aircrack-ng hack1-01.cap -w rockyou.txt</div>
+            <div class="tags">
+              <span class="tag">Aircrack-ng Suite</span><span class="tag">Wireshark EAPOL</span><span class="tag">Monitor Mode</span><span class="tag">802.11w PMF</span>
+            </div>
+          </div>
+          <a href="https://github.com/27thEncoder/WPA2-4WayHandshake-Cryptanalysis-WordlistBruteforce" class="c-link">INSPECT REPOSITORY & FULL LOGS →</a>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta">
+              <span>LINUX INTERNALS & SHELL BOUNDARIES</span>
+              <span class="badge-amber">44 Commits • ★ 2</span>
+            </div>
+            <h3>Advanced Linux Shell Architecture & OTW Bandit Journal</h3>
+            <p>Hand-documented 33+ tiers of OverTheWire Bandit with sanitized responsible disclosure. Covers POSIX file mechanics, Bash daemon loops (Tier 24→25), restricted editor shell escapes (Tier 25→26), hex archive extraction, SSL/TLS sockets, and Git history mining.</p>
+            <div class="code-box"># Tier 24→25 Daemon Loop & Tier 28→31 Git Forensics<br>$ for i in {0000..9999}; do echo "$PASS $i"; done | nc localhost 30002<br>$ git log --all --full-history --stat</div>
+            <div class="tags">
+              <span class="tag">POSIX & Bash</span><span class="tag">Shell Escapes</span><span class="tag">Git Forensics</span><span class="tag">Privilege Boundaries</span>
+            </div>
+          </div>
+          <a href="https://github.com/27thEncoder/linux-shell-architecture-OTW-Bandit-" class="c-link">READ 33+ TIER ARCHITECTURE DOCS →</a>
+        </div>
+        <div class="card reveal">
+          <div>
+            <div class="card-meta">
+              <span>DATABASE EXPLOITATION & APPSEC</span>
+              <span class="badge-green">SQLi PATH COMPLETED</span>
+            </div>
+            <h3>SQL Injection Mastery & EC-Council SQLi Track</h3>
+            <p>Completed the PortSwigger Web Security Academy SQL Injection path—covering authentication bypass, UNION-based schema extraction, error-based inference, blind boolean/time-delay attacks, and out-of-band (OAST) techniques. Currently preparing for EC-Council SQL Injection certification.</p>
+            <div class="code-box">' UNION SELECT table_name, column_name FROM information_schema.columns--<br>' AND (SELECT CASE WHEN (1=1) THEN pg_sleep(5) ELSE pg_sleep(0) END)--</div>
+            <div class="tags">
+              <span class="tag">PortSwigger SQLi</span><span class="tag">UNION & Blind SQLi</span><span class="tag">Burp Suite</span><span class="tag">EC-Council SQLi Prep</span>
+            </div>
+          </div>
+          <a href="https://github.com/27thEncoder" class="c-link">VIEW GITHUB PROFILE (@27thEncoder) →</a>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta">
+              <span>ACTIVE RESEARCH & CTFs</span>
+              <span class="badge-amber">IN PROGRESS</span>
+            </div>
+            <h3>Web Security, XSS, Headers, Cryptography & CTFs</h3>
+            <p>Expanding from foundational networking into modern browser security—analyzing Cross-Site Scripting (XSS) contexts, HTTP security headers (CSP, HSTS, X-Frame-Options), and applied cryptography while preparing for competitive Capture The Flag (CTFtime) challenges.</p>
+            <div class="code-box">Content-Security-Policy: default-src 'self'; script-src 'none';<br>&lt;script&gt;fetch('/api/token').then(r=&gt;r.text())&lt;/script&gt;</div>
+            <div class="tags">
+              <span class="tag">XSS Exploitation</span><span class="tag">Security Headers</span><span class="tag">Cryptography</span><span class="tag">CTFtime</span>
+            </div>
+          </div>
+          <a href="https://www.linkedin.com/in/madhan-m-27thencoder/" class="c-link">FOLLOW PROGRESS ON LINKEDIN →</a>
+        </div>
+
+      </div>
+    </section>
+    <!-- ===================================================================
+         SECTION 04: PROFICIENCY MATRIX & VERIFIED PLATFORMS
+         =================================================================== -->
+    <section id="skills">
+      <div class="sec-tag reveal">// 04. PROFICIENCY MATRIX & VERIFIED PLATFORMS</div>
+      <h2 class="reveal">Technical Mastery & Lab Credentials</h2>
+      <p class="sec-desc reveal">Command-line fluency and verified lab completions across Linux systems, packet analysis, and offensive web security.</p>
+
+      <div class="grid" style="margin-bottom: 32px;">
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>CORE STRENGTH</span><span class="badge-green">100% PROFICIENCY</span></div>
+            <h3>Linux Internals & Shell Architecture</h3>
+            <p>Complete command-line fluency across POSIX file systems, SUID/SGID boundaries, restricted shell escapes, Bash automation, process control, SSH tunneling, and Git forensics.</p>
+            <div class="bar-wrap">
+              <div class="bar-head"><span>Linux CLI, POSIX & Shell Escapes</span><span style="color:var(--neon);">100%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-head"><span>Networking, 802.11i & Packet Analysis</span><span style="color:var(--neon);">92%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:92%;"></div></div>
+            </div>
+            <div class="bar-wrap">
+              <div class="bar-head"><span>SQL Injection & Database Exploitation</span><span style="color:var(--neon);">95%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:95%;"></div></div>
+            </div>
+            <div class="bar-wrap" style="margin-bottom:0;">
+              <div class="bar-head"><span>XSS, Security Headers & Cryptography</span><span style="color:var(--cyan);">ACTIVE FOCUS</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width:80%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>TRYHACKME & HACK THE BOX</span><span class="badge-green">WEBBED BADGE</span></div>
+            <h3>Verified Platform Milestones</h3>
+            <p><strong>TryHackMe (@madhan272913):</strong> Awarded the <em>"WEBBED"</em> badge and completed <em>HTTP in Detail</em>, <em>DNS in Detail</em>, <em>Intro to LAN</em>, <em>What is Networking?</em>, and <em>Linux Fundamentals (Pt. 1)</em>.</p>
+            <p><strong>Hack The Box:</strong> Practicing active network enumeration, service fingerprinting, and structured offensive lab machines alongside upcoming CTF competitions.</p>
+          </div>
+          <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <a href="https://tryhackme.com/p/madhan272913?utm_campaign=social_share&utm_medium=social&utm_content=profile&cardVersion=e2a41bc7b009&utm_source=copy&share_date=2026-11-18&sharerId=6ad8b142a249e4df2dbd2769" class="c-link">VERIFY TRYHACKME →</a>
+            <a href="https://profile.hackthebox.com/profile/019ed08e-bf33-7114-9885-b1a425753268?utm_medium=copy_url" class="c-link">HACK THE BOX →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tags reveal">
+        <span class="tag">Linux Internals & Bash (100%)</span>
+        <span class="tag">IEEE 802.11i / WPA2-PSK / WPA3-SAE</span>
+        <span class="tag">Wireshark & EAPOL Dissection</span>
+        <span class="tag">Aircrack-ng / Airodump-ng / Aireplay-ng</span>
+        <span class="tag">SQL Injection (UNION, Blind, Error, OAST)</span>
+        <span class="tag">XSS & HTTP Security Headers</span>
+        <span class="tag">CryptoHack (RSA & Diffie-Hellman)</span>
+        <span class="tag">OTW Natas, Leviathan & Buffer Overflows</span>
+        <span class="tag">Custom Port Scanners & Regex Tooling</span>
+        <span class="tag">Burp Suite & Git Forensics</span>
+      </div>
+    </section>
+    <!-- ===================================================================
+         SECTION 05: MASTER EXECUTION BLUEPRINT & COMPLETE SYLLABUS
+         =================================================================== -->
+    <section id="roadmap">
+      <div class="sec-tag reveal">// 05. MASTER EXECUTION BLUEPRINT & SYLLABUS</div>
+      <h2 class="reveal">The Complete Engineering & Interview Checklist</h2>
+      <p class="sec-desc reveal">Everything required to build real technical depth—moving past surface tools into standalone code, raw protocol math, unguided CTFs, and core computer science.</p>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>TRACK 01 // CUSTOM CODE (150+ LINES)</span><span class="badge-amber">BUILD FROM ZERO</span></div>
+            <h3>Standalone Security Tools (No External Libraries)</h3>
+            <p>Writing 150–200+ lines of clean, structured code in <strong>Python, C, or Go</strong> without relying on pre-built wrappers:<br>
+            • <strong>Multi-Threaded TCP Port Scanner</strong> (raw sockets & threads)<br>
+            • <strong>Regex Log Anomaly Detector</strong> (parsing 50MB+ server logs for brute-force patterns)<br>
+            • <strong>Raw XOR / RSA Routine & Packet Sniffer</strong> (built without crypto/scapy libraries)<br>
+            • <strong>HTTP Security Header Auditor</strong></p>
+            <div class="tags">
+              <span class="tag">Raw Sockets & Threads</span><span class="tag">50MB Log Parser</span><span class="tag">No-Lib Crypto</span><span class="tag">Python / C / Go</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>TRACK 02 // CORE CS, MATH & APTITUDE</span><span class="badge-amber">SCREENING PREP</span></div>
+            <h3>Data Structures, Modular Math & Memory Layout</h3>
+            <p>Mastering the core computer science fundamentals tested in technical screening exams:<br>
+            • <strong>Core Data Structures:</strong> Arrays, Hash Maps, Trees & Graphs<br>
+            • <strong>Applied Math:</strong> Modular Arithmetic & Prime Factorization (for RSA/DH)<br>
+            • <strong>Low-Level Memory:</strong> Binary/Hex Stack Layout & Registers<br>
+            • <strong>Timed Problem Solving:</strong> Algorithmic Aptitude</p>
+            <div class="tags">
+              <span class="tag">Arrays/Maps/Trees/Graphs</span><span class="tag">Modular Arithmetic</span><span class="tag">Stack Memory</span><span class="tag">Aptitude</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>TRACK 03 // UNGUIDED CTFs & DEEP "WHY"</span><span class="badge-green">ACTIVE GRIND</span></div>
+            <h3>Unguided Wargames & Interview Architecture</h3>
+            <p>Solving unflagged challenges and mastering the underlying mechanics behind attacks:<br>
+            • <strong>Wargames:</strong> CryptoHack (RSA/DH), OTW Natas, OTW Leviathan, Buffer Overflows & CTFtime<br>
+            • <strong>Interview Mastery:</strong> Why WPA2 leaks handshakes vs. WPA3 Dragonfly math, TCP packet-loss recovery internals, and exact stack frame corruption mechanics.</p>
+            <div class="tags">
+              <span class="tag">CryptoHack</span><span class="tag">Natas & Leviathan</span><span class="tag">WPA3 Dragonfly Math</span><span class="tag">TCP Internals</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>TRACK 04 // PRACTICAL CREDENTIALS</span><span class="badge-amber">IN PROGRESS</span></div>
+            <h3>EC-Council SQLi, APIsec, Qualys & arcX</h3>
+            <p>Pairing my completed PortSwigger SQLi path with focused, hands-on credentials:<br>
+            • <strong>EC-Council CodeRed:</strong> SQL Injection Attacks<br>
+            • <strong>APIsec University:</strong> API Penetration Testing (OWASP API Top 10)<br>
+            • <strong>Qualys Training:</strong> TotalAppSec & Vulnerability Management<br>
+            • <strong>arcX:</strong> Foundation Level Threat Intelligence (CTI 101)</p>
+            <div class="tags">
+              <span class="tag">EC-Council SQLi</span><span class="tag">APIsec PenTesting</span><span class="tag">Qualys TotalAppSec</span><span class="tag">arcX CTI 101</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- ===================================================================
+         SECTION 06: DEFENSIVE ENGINEERING & REMEDIATION
+         =================================================================== -->
+    <section id="hardening">
+      <div class="sec-tag reveal">// 06. DEFENSIVE ENGINEERING & REMEDIATION</div>
+      <h2 class="reveal">Architectural Hardening Matrix</h2>
+      <p class="sec-desc reveal">Offensive security is incomplete without blue-team remediation. Every vulnerability dissected in my labs maps directly to practical defensive controls.</p>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>WIRELESS INFRASTRUCTURE</span><span class="badge-green">IEEE 802.11w / WPA3</span></div>
+            <h3>Mitigating 802.11 Deauth & Offline Cracking</h3>
+            <p>Enforce <strong>Protected Management Frames (802.11w PMF)</strong> to cryptographically sign deauthentication frames, upgrade WPA2-PSK to <strong>WPA3-SAE</strong> to eliminate offline dictionary attacks, disable WPS, and enforce 16+ character high-entropy passphrases.</p>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>DATABASE & WEB LAYER</span><span class="badge-green">OWASP / CWE-89 & 79</span></div>
+            <h3>Eliminating SQLi & XSS Vectors</h3>
+            <p>Replace dynamic string concatenation with <strong>Parameterized Queries (Prepared Statements)</strong>, enforce strict <strong>Content-Security-Policy (CSP)</strong> and HTTP security headers, apply context-aware output encoding, and restrict database user privileges.</p>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>UNIX & POSIX SYSTEMS</span><span class="badge-green">LEAST PRIVILEGE</span></div>
+            <h3>Hardening Shell & SUID Boundaries</h3>
+            <p>Audit SUID/SGID binaries and restricted shell environments (<code>rbash</code>, pager/editor escapes), sanitize environment variables (<code>PATH</code>, <code>IFS</code>), and enforce strict POSIX permissions and Git secret-scanning hooks.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 07: DIRECT COMMS & VERIFICATION
+         =================================================================== -->
+    <section id="contact">
+      <div class="sec-tag reveal">// 07. DIRECT COMMS & VERIFICATION</div>
+      <h2 class="reveal">Establish Contact</h2>
+      <p class="sec-desc reveal">Open to cybersecurity collaborations, hackathon teams, technical evaluations, and security engineering discussions.</p>
+      <div class="grid">
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>DIRECT EMAIL</span><span class="badge-green">PRIMARY</span></div>
+            <h3>madhan272913@gmail.com</h3>
+            <p>Direct inbox for research inquiries, hackathon invites, and technical feedback.</p>
+          </div>
+          <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+            <a href="mailto:madhan272913@gmail.com" class="c-link">SEND EMAIL →</a>
+            <button onclick="copyMail()" id="copy-btn" class="btn btn-ghost" style="padding:7px 14px; font-size:0.75rem;">COPY ADDRESS</button>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>PROFESSIONAL NETWORK</span><span class="badge-green">VERIFIED</span></div>
+            <h3>linkedin.com @ MadhanM</h3>
+            <p>Follow ongoing lab milestones, certification updates, and security engineering writeups.</p>
+          </div>
+          <a href="https://www.linkedin.com/in/madhan-m-27thencoder/" class="c-link">OPEN LINKEDIN PROFILE →</a>
+        </div>
+
+        <div class="card reveal">
+          <div>
+            <div class="card-meta"><span>SOURCE & ARTIFACTS</span><span class="badge-amber">://github.com</span></div>
+            <h3>GitHub (@27thEncoder)</h3>
+            <p>Inspect all 75+ research commits, packet capture logs, Linux shell architecture docs, and custom tools.</p>
+          </div>
+          <a href="https://github.com/27thEncoder" class="c-link">OPEN GITHUB PROFILE →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         FOOTER
+         =================================================================== -->
+    <footer class="reveal" style="border-top:1px solid var(--border); padding:42px 0; text-align:center; color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:0.78rem; line-height:1.8;">
+      <div style="color:var(--text); font-weight:700; margin-bottom:6px;">MADHAN M (27thEncoder) — CHENNAI, TAMIL NADU, INDIA</div>
+      <div style="margin-bottom:14px;">
+        <a href="mailto:madhan272913@gmail.com" style="color:var(--neon);">madhan272913@gmail.com</a> •
+        <a href="https://github.com/27thEncoder" style="color:var(--neon);">GitHub</a> •
+        <a href="https://www.linkedin.com/in/madhan-m-27thencoder/" style="color:var(--neon);">LinkedIn</a> •
+        <a href="https://tryhackme.com/p/madhan272913?utm_campaign=social_share&utm_medium=social&utm_content=profile&cardVersion=e2a41bc7b009&utm_source=copy&share_date=2026-11-18&sharerId=6ad8b142a249e4df2dbd2769" style="color:var(--neon);">TryHackMe</a>
+      </div>
+      <div style="color:#586069; max-width:740px; margin:0 auto;">
+        ETHICS & COMPLIANCE: All wireless auditing, packet interception, and exploitation labs documented on this domain were executed exclusively inside isolated, author-owned environments in strict alignment with responsible disclosure standards and the Indian Information Technology Act, 2000 (Sections 43 & 66).
+      </div>
+    </footer>
+  </div>
+
+  <!-- =====================================================================
+       JAVASCRIPT: SCROLL-REVEAL, PROGRESS BAR, METER FILLS & EMAIL COPY
+       ===================================================================== -->
+  <script>
+    // 1. One-click email copy
+    function copyMail() {
+      navigator.clipboard.writeText('madhan272913@gmail.com');
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = 'COPIED ✓';
+      btn.style.borderColor = '#00ffaa';
+      btn.style.color = '#00ffaa';
+      setTimeout(() => {
+        btn.textContent = 'COPY ADDRESS';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 2200);
+    }
+
+    // 2. Top neon scroll progress bar
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }, { passive: true });
+
+    // 3. Staggered scroll-reveal observer for cards, sections, and proficiency bars
+    document.querySelectorAll('.grid, .proof-grid, .stats').forEach(container => {
+      container.querySelectorAll('.reveal').forEach((el, idx) => {
+        el.style.transitionDelay = (idx * 90) + 'ms';
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+            bar.classList.add('fill-active');
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
